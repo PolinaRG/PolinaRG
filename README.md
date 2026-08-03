@@ -1,5 +1,10 @@
 ## Hi there 👋
 
+### Мои языки программирования (включая приватные репозитории)
+
+![](./profile-summary-card-output/default/0-profile-details.svg)
+![](./profile-summary-card-output/default/1-most-used-languages.svg)
+
 <!--
 **PolinaRG/PolinaRG** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
 
