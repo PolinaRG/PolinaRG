@@ -5,17 +5,25 @@ on:
     - cron: "0 0 * * *"
   workflow_dispatch: # Позволяет запускать генерацию вручную
 
+# РАЗРЕШАЕМ ВСТРОЕННОМУ ТОКЕНУ ЗАПИСЫВАТЬ В ЭТОТ РЕПОЗИТОРИЙ
+permissions:
+  contents: write
+
 jobs:
   build:
     runs-on: ubuntu-latest
     name: generate-github-profile-summary-cards
 
     steps:
+      # Важно передать встроенный токен при чекауте, чтобы Гит запомнил права на запись
       - uses: actions/checkout@v5
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
       
       - name: Generate GitHub Profile Summary Cards
         uses: vn7n24fzkq/github-profile-summary-cards@release
         env:
+          # Этот токен теперь умеет ТОЛЬКО ЧИТАТЬ все репозитории:
           GITHUB_TOKEN: ${{ secrets.CUSTOM_PAT }}
         with:
           USERNAME: ${{ github.repository_owner }}
@@ -27,4 +35,5 @@ jobs:
           git config --local user.name "GitHub Action"
           git add -A
           git commit -m "Update profile summary cards" || exit 0
-          git push
+          # Пушим, используя встроенные права воркфлоу, а не ваш секретный токен
+          git push origin main
